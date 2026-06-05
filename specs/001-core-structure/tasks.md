@@ -36,8 +36,8 @@ sites/onboarding, sites/assets, sites/scripts
 
 **Purpose**: Confirm baseline and version-control hygiene before creating the structure.
 
-- [ ] T001 Capture non-breaking baseline: confirm `app/app.vue` exists and `npm run build` succeeds at repo root (record as the pre-change reference per FR-009 / research Decision 3)
-- [ ] T002 [P] Ensure repo-root `.gitignore` covers Node/Nuxt patterns (`node_modules/`, `dist/`, `.nuxt/`, `.output/`, `*.log`, `.env*`); append only missing patterns
+- [X] T001 Capture non-breaking baseline: confirm `app/app.vue` exists and `npm run build` succeeds at repo root (record as the pre-change reference per FR-009 / research Decision 3)
+- [X] T002 [P] Ensure repo-root `.gitignore` covers Node/Nuxt patterns (`node_modules/`, `dist/`, `.nuxt/`, `.output/`, `*.log`, `.env*`); append only missing patterns
 
 ---
 
@@ -47,7 +47,7 @@ sites/onboarding, sites/assets, sites/scripts
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T003 Create the top-level `sites/` directory at repository root (parent of all six layers)
+- [X] T003 Create the top-level `sites/` directory at repository root (parent of all six layers)
 
 **Checkpoint**: `sites/` exists — user stories can begin.
 
@@ -63,23 +63,23 @@ sites/onboarding, sites/assets, sites/scripts
 
 > Each task: `mkdir -p <dir>` then add an interim `.gitkeep` so the empty dir is tracked. `.gitkeep` is superseded by the README in US2 (research Decision 2). All [P] — distinct paths, `mkdir -p` self-creates parents.
 
-- [ ] T004 [P] [US1] Create `sites/core/` with `sites/core/.gitkeep`
-- [ ] T005 [P] [US1] Create `sites/core/components/` with `sites/core/components/.gitkeep`
-- [ ] T006 [P] [US1] Create `sites/core/components/sections/` with `sites/core/components/sections/.gitkeep`
-- [ ] T007 [P] [US1] Create `sites/core/components/ui/` with `sites/core/components/ui/.gitkeep`
-- [ ] T008 [P] [US1] Create `sites/core/components/layout/` with `sites/core/components/layout/.gitkeep`
-- [ ] T009 [P] [US1] Create `sites/core/composables/` with `sites/core/composables/.gitkeep`
-- [ ] T010 [P] [US1] Create `sites/core/theme/` with `sites/core/theme/.gitkeep`
-- [ ] T011 [P] [US1] Create `sites/core/seo/` with `sites/core/seo/.gitkeep`
-- [ ] T012 [P] [US1] Create `sites/core/forms/` with `sites/core/forms/.gitkeep`
-- [ ] T013 [P] [US1] Create `sites/core/types/` with `sites/core/types/.gitkeep`
-- [ ] T014 [P] [US1] Create `sites/core/utils/` with `sites/core/utils/.gitkeep`
-- [ ] T015 [P] [US1] Create `sites/core/schemas/` with `sites/core/schemas/.gitkeep`
-- [ ] T016 [P] [US1] Create `sites/templates/` with `sites/templates/.gitkeep`
-- [ ] T017 [P] [US1] Create `sites/clients/` with `sites/clients/.gitkeep`
-- [ ] T018 [P] [US1] Create `sites/onboarding/` with `sites/onboarding/.gitkeep`
-- [ ] T019 [P] [US1] Create `sites/assets/` with `sites/assets/.gitkeep`
-- [ ] T020 [P] [US1] Create `sites/scripts/` with `sites/scripts/.gitkeep`
+- [X] T004 [P] [US1] Create `sites/core/` with `sites/core/.gitkeep`
+- [X] T005 [P] [US1] Create `sites/core/components/` with `sites/core/components/.gitkeep`
+- [X] T006 [P] [US1] Create `sites/core/components/sections/` with `sites/core/components/sections/.gitkeep`
+- [X] T007 [P] [US1] Create `sites/core/components/ui/` with `sites/core/components/ui/.gitkeep`
+- [X] T008 [P] [US1] Create `sites/core/components/layout/` with `sites/core/components/layout/.gitkeep`
+- [X] T009 [P] [US1] Create `sites/core/composables/` with `sites/core/composables/.gitkeep`
+- [X] T010 [P] [US1] Create `sites/core/theme/` with `sites/core/theme/.gitkeep`
+- [X] T011 [P] [US1] Create `sites/core/seo/` with `sites/core/seo/.gitkeep`
+- [X] T012 [P] [US1] Create `sites/core/forms/` with `sites/core/forms/.gitkeep`
+- [X] T013 [P] [US1] Create `sites/core/types/` with `sites/core/types/.gitkeep`
+- [X] T014 [P] [US1] Create `sites/core/utils/` with `sites/core/utils/.gitkeep`
+- [X] T015 [P] [US1] Create `sites/core/schemas/` with `sites/core/schemas/.gitkeep`
+- [X] T016 [P] [US1] Create `sites/templates/` with `sites/templates/.gitkeep`
+- [X] T017 [P] [US1] Create `sites/clients/` with `sites/clients/.gitkeep`
+- [X] T018 [P] [US1] Create `sites/onboarding/` with `sites/onboarding/.gitkeep`
+- [X] T019 [P] [US1] Create `sites/assets/` with `sites/assets/.gitkeep`
+- [X] T020 [P] [US1] Create `sites/scripts/` with `sites/scripts/.gitkeep`
 
 **Checkpoint**: All 17 directories present and tracked — skeleton independently verifiable (SC-002).
 
@@ -95,23 +95,23 @@ sites/onboarding, sites/assets, sites/scripts
 
 ### Implementation for User Story 2
 
-- [ ] T021 [P] [US2] Write `sites/core/README.md` — responsibility: business-neutral reusable engine; depends_on: nothing; prohibited: client/template-specific content + hardcoded business logic (FR-006)
-- [ ] T022 [P] [US2] Write `sites/core/components/README.md` — UI components grouped by role (sections/ui/layout); depends_on: core only
-- [ ] T023 [P] [US2] Write `sites/core/components/sections/README.md` — full page sections (Hero, Services, FAQ, CTA); not atomic UI, not layout chrome
-- [ ] T024 [P] [US2] Write `sites/core/components/ui/README.md` — atomic UI primitives (Button, Input, Card, Badge); not full sections
-- [ ] T025 [P] [US2] Write `sites/core/components/layout/README.md` — structural chrome (Header, Footer, Container); not sections
-- [ ] T026 [P] [US2] Write `sites/core/composables/README.md` — Vue `use*` composables (reactivity/lifecycle); not pure utils
-- [ ] T027 [P] [US2] Write `sites/core/theme/README.md` — design tokens + dark/light theme system; not component markup
-- [ ] T028 [P] [US2] Write `sites/core/seo/README.md` — SEO meta utilities/helpers; not page content
-- [ ] T029 [P] [US2] Write `sites/core/forms/README.md` — form blocks + validation helpers; not full sections
-- [ ] T030 [P] [US2] Write `sites/core/types/README.md` — shared TypeScript types only; not runtime schemas
-- [ ] T031 [P] [US2] Write `sites/core/utils/README.md` — pure framework-free functions/data transformers; no Vue reactivity
-- [ ] T032 [P] [US2] Write `sites/core/schemas/README.md` — versioned runtime-validatable config schemas; not plain types
-- [ ] T033 [P] [US2] Write `sites/templates/README.md` — niche orchestrations of core sections; depends_on: core; prohibited: duplicated logic, per-client custom layouts (FR-007)
-- [ ] T034 [P] [US2] Write `sites/clients/README.md` — isolated per-client config + assets + domain; depends_on: core, templates; prohibited: shared/global logic, cross-client coupling; nothing may depend on clients (FR-007)
-- [ ] T035 [P] [US2] Write `sites/onboarding/README.md` — intake form data + onboarding input; depends_on: core; prohibited: rendering logic
-- [ ] T036 [P] [US2] Write `sites/assets/README.md` — shared + client assets; depends_on: nothing; prohibited: code/logic
-- [ ] T037 [P] [US2] Write `sites/scripts/README.md` — automation, scaffolding, generators; depends_on: core; prohibited: client-specific one-offs
+- [X] T021 [P] [US2] Write `sites/core/README.md` — responsibility: business-neutral reusable engine; depends_on: nothing; prohibited: client/template-specific content + hardcoded business logic (FR-006)
+- [X] T022 [P] [US2] Write `sites/core/components/README.md` — UI components grouped by role (sections/ui/layout); depends_on: core only
+- [X] T023 [P] [US2] Write `sites/core/components/sections/README.md` — full page sections (Hero, Services, FAQ, CTA); not atomic UI, not layout chrome
+- [X] T024 [P] [US2] Write `sites/core/components/ui/README.md` — atomic UI primitives (Button, Input, Card, Badge); not full sections
+- [X] T025 [P] [US2] Write `sites/core/components/layout/README.md` — structural chrome (Header, Footer, Container); not sections
+- [X] T026 [P] [US2] Write `sites/core/composables/README.md` — Vue `use*` composables (reactivity/lifecycle); not pure utils
+- [X] T027 [P] [US2] Write `sites/core/theme/README.md` — design tokens + dark/light theme system; not component markup
+- [X] T028 [P] [US2] Write `sites/core/seo/README.md` — SEO meta utilities/helpers; not page content
+- [X] T029 [P] [US2] Write `sites/core/forms/README.md` — form blocks + validation helpers; not full sections
+- [X] T030 [P] [US2] Write `sites/core/types/README.md` — shared TypeScript types only; not runtime schemas
+- [X] T031 [P] [US2] Write `sites/core/utils/README.md` — pure framework-free functions/data transformers; no Vue reactivity
+- [X] T032 [P] [US2] Write `sites/core/schemas/README.md` — versioned runtime-validatable config schemas; not plain types
+- [X] T033 [P] [US2] Write `sites/templates/README.md` — niche orchestrations of core sections; depends_on: core; prohibited: duplicated logic, per-client custom layouts (FR-007)
+- [X] T034 [P] [US2] Write `sites/clients/README.md` — isolated per-client config + assets + domain; depends_on: core, templates; prohibited: shared/global logic, cross-client coupling; nothing may depend on clients (FR-007)
+- [X] T035 [P] [US2] Write `sites/onboarding/README.md` — intake form data + onboarding input; depends_on: core; prohibited: rendering logic
+- [X] T036 [P] [US2] Write `sites/assets/README.md` — shared + client assets; depends_on: nothing; prohibited: code/logic
+- [X] T037 [P] [US2] Write `sites/scripts/README.md` — automation, scaffolding, generators; depends_on: core; prohibited: client-specific one-offs
 
 **Checkpoint**: 100% doc coverage (SC-003); boundaries documented (FR-005/006/007/010).
 
@@ -125,9 +125,9 @@ sites/onboarding, sites/assets, sites/scripts
 
 ### Implementation for User Story 3
 
-- [ ] T038 [US3] Remove the now-redundant interim `.gitkeep` from every directory that received a `README.md` in US2 (README doubles as keep-file — research Decision 2); `git rm` the 17 `.gitkeep` files
-- [ ] T039 [US3] Safeguard: add `.gitkeep` to any mandated directory that has no `README.md` (none expected; keeps FR-008 invariant if a README was missed)
-- [ ] T040 [US3] Verify preservation: `git ls-files sites | sed 's#/[^/]*$##' | sort -u` covers all 17 directories; confirm no mandated directory is untracked (FR-008 / SC-002)
+- [X] T038 [US3] Remove the now-redundant interim `.gitkeep` from every directory that received a `README.md` in US2 (README doubles as keep-file — research Decision 2); `git rm` the 17 `.gitkeep` files
+- [X] T039 [US3] Safeguard: add `.gitkeep` to any mandated directory that has no `README.md` (none expected; keeps FR-008 invariant if a README was missed)
+- [X] T040 [US3] Verify preservation: `git ls-files sites | sed 's#/[^/]*$##' | sort -u` covers all 17 directories; confirm no mandated directory is untracked (FR-008 / SC-002)
 
 **Checkpoint**: Full structure reproducible from a clean clone with one tracked file per directory.
 
@@ -137,9 +137,9 @@ sites/onboarding, sites/assets, sites/scripts
 
 **Purpose**: Validate the structure against contract and success criteria.
 
-- [ ] T041 [P] Run quickstart.md verification: `find sites -type d | sort` = 17 dirs; README presence check emits no `MISSING README` line
-- [ ] T042 [P] Walk the `contracts/structure-contract.md` "Verification checklist" and tick each item (6 layers, 8 core areas, 3 component groups, 4-field READMEs, no untracked dir)
-- [ ] T043 Confirm non-breaking + SC-004: `app/app.vue` still present, `npm run build` succeeds, and `git status` shows no files placed outside `sites/` (and the intended `.gitignore`)
+- [X] T041 [P] Run quickstart.md verification: `find sites -type d | sort` = 17 dirs; README presence check emits no `MISSING README` line
+- [X] T042 [P] Walk the `contracts/structure-contract.md` "Verification checklist" and tick each item (6 layers, 8 core areas, 3 component groups, 4-field READMEs, no untracked dir)
+- [X] T043 Confirm non-breaking + SC-004: `app/app.vue` still present, `npm run build` succeeds, and `git status` shows no files placed outside `sites/` (and the intended `.gitignore`)
 
 ---
 
