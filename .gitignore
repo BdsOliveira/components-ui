@@ -18,6 +18,9 @@ logs
 .fleet
 .idea
 
+# Scaffold staging dirs (new-client.ts) — removed on success/failure; ignore any orphan
+sites/clients/.new-client-tmp-*
+
 # Local env files
 .env
 .env.*

@@ -4,7 +4,7 @@
 
 **Created**: 2026-06-06
 
-**Status**: Draft
+**Status**: Completed
 
 **Input**: User description: "FASE 7 — Criar 1 cliente fake. Agora crie: clients/clinica-saude/{config.json, images/, domain.txt}. precisamos validar: troca de tema, troca de conteúdo, troca de imagens, responsividade"
 
