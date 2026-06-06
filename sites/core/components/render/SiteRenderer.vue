@@ -24,6 +24,7 @@
 <script setup lang="ts">
 import type { WebsiteConfig } from '~~/sites/core/schemas'
 import { useSiteTheme } from '~~/sites/core/composables/useSiteTheme'
+import { useSiteCompany } from '~~/sites/core/composables/useSiteCompany'
 import DynamicSection from './DynamicSection.vue'
 
 const props = defineProps<{
@@ -33,6 +34,8 @@ const props = defineProps<{
 
 /** Provide the validated theme to every rendered section (R11 / FR-015). */
 useSiteTheme(props.config.theme)
+/** Provide the validated company identity once at site level (Decision 2 / FR-011). */
+useSiteCompany(props.config.company)
 
 /**
  * Stable per-section key (R10 / FR-016 / research D3): honor an explicit `id`

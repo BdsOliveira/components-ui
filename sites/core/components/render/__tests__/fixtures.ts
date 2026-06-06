@@ -18,24 +18,28 @@ import {
   clearSectionComponentRegistry,
 } from '~~/sites/core/components/sections/registry'
 import { useSiteTheme } from '~~/sites/core/composables/useSiteTheme'
+import { useSiteCompany } from '~~/sites/core/composables/useSiteCompany'
 
 /**
  * A minimal stub section component: renders an identifiable marker carrying its
- * `type` and the props (config slice) it received, so tests can assert dispatch,
- * order, and slice isolation via the DOM.
+ * `type` and the slice it received via the single `data` prop, so tests can
+ * assert dispatch, order, and slice isolation via the DOM.
+ *
+ * DynamicSection binds the slice as `:data="section"` (Decision 1), so the stub
+ * declares a `data` prop and serializes `props.data` (NOT fall-through attrs).
  */
 export function makeStubSection(type: string): Component {
   return defineComponent({
     name: `Stub_${type}`,
     inheritAttrs: false,
-    setup(_props, { attrs }) {
-      // `attrs` is the bound config slice (DynamicSection does v-bind="section").
+    props: { data: { type: Object, default: () => ({}) } },
+    setup(props) {
       return () =>
         h(
           'div',
           {
             'data-stub': type,
-            'data-props': JSON.stringify(attrs),
+            'data-props': JSON.stringify(props.data),
           },
           type,
         )
@@ -48,10 +52,25 @@ export function makeThemeStub(type: string): Component {
   return defineComponent({
     name: `ThemeStub_${type}`,
     inheritAttrs: false,
+    props: { data: { type: Object, default: () => ({}) } },
     setup() {
       const theme = useSiteTheme()
       return () =>
         h('div', { 'data-stub': type, 'data-theme': JSON.stringify(theme) }, type)
+    },
+  })
+}
+
+/** A stub that injects the site company and exposes it in the DOM (company tests). */
+export function makeCompanyStub(type: string): Component {
+  return defineComponent({
+    name: `CompanyStub_${type}`,
+    inheritAttrs: false,
+    props: { data: { type: Object, default: () => ({}) } },
+    setup() {
+      const company = useSiteCompany()
+      return () =>
+        h('div', { 'data-stub': type, 'data-company': JSON.stringify(company) }, type)
     },
   })
 }
