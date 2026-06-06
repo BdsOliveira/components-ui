@@ -1,0 +1,49 @@
+{
+  "company": {
+    "name": "Bright Smile Dental",
+    "tagline": "Modern dental care for the whole family",
+    "contact": {
+      "email": "hello@brightsmile.example",
+      "phone": "+1 555 0100",
+      "address": "12 Park Avenue, Springfield"
+    },
+    "social": { "instagram": "https://instagram.com/brightsmile" },
+    "legal": { "legalName": "Bright Smile Dental LLC" }
+  },
+  "sections": {
+    "hero": {
+      "variant": "centered",
+      "heading": "Confident smiles start here",
+      "subheading": "Gentle, modern dentistry in the heart of Springfield.",
+      "cta": { "label": "Book a visit", "href": "#contact" }
+    },
+    "services": {
+      "heading": "Our services",
+      "items": [
+        { "title": "Cleanings & check-ups", "description": "Routine care to keep teeth healthy." },
+        { "title": "Whitening", "description": "Brighten your smile safely." },
+        { "title": "Implants", "description": "Permanent, natural-looking replacements." }
+      ]
+    },
+    "testimonials": {
+      "heading": "What patients say",
+      "items": [
+        { "quote": "Painless and friendly — best dentist I have had.", "author": "A. Lopez" },
+        { "quote": "My kids actually look forward to visits now.", "author": "M. Chen", "role": "Parent" }
+      ]
+    },
+    "faq": {
+      "heading": "Questions",
+      "items": [
+        { "question": "Do you take insurance?", "answer": "Yes, most major plans are accepted." },
+        { "question": "Do you see children?", "answer": "Absolutely — we welcome all ages." }
+      ]
+    },
+    "contact": {
+      "heading": "Visit us",
+      "showForm": true,
+      "hours": [{ "label": "Mon–Fri", "value": "9–5" }]
+    },
+    "footer": {}
+  }
+}
