@@ -27,3 +27,14 @@ export {
   type WebsiteValidationResult,
   type SectionValidation,
 } from './validate-website'
+
+// Phase 5 — the eight concrete block schemas (source of truth for each block's
+// `data` type). Registered into the section union via `register.ts`.
+export { heroSchema, type HeroConfig } from './hero'
+export { aboutSchema, type AboutConfig } from './about'
+export { servicesSchema, type ServicesConfig } from './services'
+export { ctaSchema, type CtaConfig } from './cta'
+export { testimonialsSchema, type TestimonialsConfig } from './testimonials'
+export { faqSchema, type FaqConfig } from './faq'
+export { contactSchema, type ContactConfig } from './contact'
+export { footerSchema, type FooterConfig } from './footer'

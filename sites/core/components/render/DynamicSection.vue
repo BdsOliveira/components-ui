@@ -59,8 +59,9 @@ onErrorCaptured(() => {
 </script>
 
 <template>
-  <!-- Only this item's slice is bound (R5 / FR-008). `type` is ignored by the
-       section component, which reads its own block fields (Phase 2/3 flat member). -->
-  <component :is="resolved" v-if="resolved && !failed" v-bind="section" />
+  <!-- Only this item's slice is bound as the single `data` prop (R5 / FR-008 /
+       block-contract §C1, Decision 1). `data.type` is ignored by the section
+       component, which reads its own block fields (Phase 2/3 flat member). -->
+  <component :is="resolved" v-if="resolved && !failed" :data="section" />
   <!-- no resolved component (or contained error) -> render nothing (R6 / FR-010) -->
 </template>
