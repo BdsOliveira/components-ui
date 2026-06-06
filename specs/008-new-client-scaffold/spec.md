@@ -4,7 +4,7 @@
 
 **Created**: 2026-06-06
 
-**Status**: Draft
+**Status**: Completed
 
 **Input**: User description: "FASE 8 — Scaffold automático. Preciso de algo como `npm run new-client`. Esse comando deve: copiar template, gerar config, criar estrutura, preparar deploy."
 
