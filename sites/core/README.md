@@ -19,3 +19,11 @@ the authoritative single source of truth for block authoring:
 
 Code-level primitives live in [`types/`](./types) (`BlockProps<T>`, `BlockSlots<Names>`) and
 [`schemas/`](./schemas) (`defineBlockSchema`, `validateBlockConfig`, `blockVariant`, `blockJsonSchema`).
+
+## The central website standard
+
+Phase 2 fixes the shape of **one block**; the central website standard fixes **how blocks compose
+into a whole site** — one canonical `WebsiteConfig = { company, theme, sections }`:
+
+- [`website-schema-contract.md`](../../specs/003-website-config-schema/contracts/website-schema-contract.md) — the authoritative whole-site contract (W1–W8).
+- [`schemas/`](./schemas#central-website-schema-phase-3) — code-level modules (`companySchema`, `themeSchema`, the `Section` registry/union, `websiteConfigSchema`, `validateWebsiteConfig`).
