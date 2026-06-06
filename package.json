@@ -7,7 +7,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "test": "vitest run"
   },
   "dependencies": {
     "@nuxt/eslint": "^1.15.2",
@@ -24,6 +25,9 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@vue/test-utils": "^2.4.11",
+    "happy-dom": "^20.10.1",
+    "vitest": "^2.1.9",
     "zod-to-json-schema": "^3.23.2"
   }
 }
