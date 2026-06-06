@@ -32,8 +32,8 @@ Renderer + composables: `sites/core/components/render/`, `sites/core/composables
 
 **Purpose**: Directory skeleton and shared scaffolding for the eight blocks.
 
-- [ ] T001 Create the Phase 5 directory skeleton: `sites/core/components/sections/__tests__/`, `sites/templates/{clinic,lawyer,restaurant,school,local-business}/`, and `sites/templates/__tests__/` (add a short `README.md` or `.gitkeep` in each new dir)
-- [ ] T002 [P] Confirm zero new deps and that `@nuxtjs/tailwindcss` / `@nuxt/image` / `@nuxt/icon` are usable by section SFCs (no `package.json` change); record the section CSS approach (Tailwind utilities + injected theme vars) in `sites/core/components/sections/README.md`
+- [X] T001 Create the Phase 5 directory skeleton: `sites/core/components/sections/__tests__/`, `sites/templates/{clinic,lawyer,restaurant,school,local-business}/`, and `sites/templates/__tests__/` (add a short `README.md` or `.gitkeep` in each new dir)
+- [X] T002 [P] Confirm zero new deps and that `@nuxtjs/tailwindcss` / `@nuxt/image` / `@nuxt/icon` are usable by section SFCs (no `package.json` change); record the section CSS approach (Tailwind utilities + injected theme vars) in `sites/core/components/sections/README.md`
 
 ---
 
@@ -43,14 +43,14 @@ Renderer + composables: `sites/core/components/render/`, `sites/core/composables
 
 **⚠️ CRITICAL**: No user-story work begins until this phase is complete.
 
-- [ ] T003 Create `useSiteCompany` provide/inject composable mirroring `useSiteTheme` in `sites/core/composables/useSiteCompany.ts` (overloads: provide `CompanyConfig`, inject `CompanyConfig`; throw if injected outside `<SiteRenderer>`); export it from `sites/core/composables` if a barrel exists
-- [ ] T004 Amend `sites/core/components/render/SiteRenderer.vue` to call `useSiteCompany(props.config.company)` alongside `useSiteTheme(props.config.theme)` (Decision 2)
-- [ ] T005 Amend `sites/core/components/render/DynamicSection.vue` binding `<component :is="resolved" v-bind="section" />` → `<component :is="resolved" :data="section" />` (Decision 1)
-- [ ] T006 Update Phase 4 fixtures in `sites/core/components/render/__tests__/fixtures.ts` so stub sections read `props.data` (declare a `data` prop) instead of fall-through `attrs`; add a company-injecting stub helper
-- [ ] T007 Update Phase 4 renderer specs (`dynamic-section.spec.ts`, `slice-isolation.spec.ts`, `validated-input.spec.ts`, `edge-cases.spec.ts`, `fallback.spec.ts`, `site-renderer.spec.ts`) to assert the `:data` slice binding and provide a `company` in `SiteRenderer` mounts
-- [ ] T008 [P] Create a theme→CSS-vars helper in `sites/core/components/sections/useThemeVars.ts` that maps the injected `ThemeConfig` (colors/typography/radius/spacing) to inline CSS custom properties for blocks to consume
-- [ ] T009 [P] Create a shared section test helper in `sites/core/components/sections/__tests__/helpers.ts` that mounts a block with `useSiteTheme`/`useSiteCompany` providers (direct-mount) and a helper to render a config through `SiteRenderer`
-- [ ] T010 Create the registration scaffold `sites/core/components/sections/register.ts` (empty, to be filled in T028), export it from `sites/core/components/sections/index.ts`, and create `app/plugins/register-sections.ts` importing `register.ts` for its boot side effect
+- [X] T003 Create `useSiteCompany` provide/inject composable mirroring `useSiteTheme` in `sites/core/composables/useSiteCompany.ts` (overloads: provide `CompanyConfig`, inject `CompanyConfig`; throw if injected outside `<SiteRenderer>`); export it from `sites/core/composables` if a barrel exists
+- [X] T004 Amend `sites/core/components/render/SiteRenderer.vue` to call `useSiteCompany(props.config.company)` alongside `useSiteTheme(props.config.theme)` (Decision 2)
+- [X] T005 Amend `sites/core/components/render/DynamicSection.vue` binding `<component :is="resolved" v-bind="section" />` → `<component :is="resolved" :data="section" />` (Decision 1)
+- [X] T006 Update Phase 4 fixtures in `sites/core/components/render/__tests__/fixtures.ts` so stub sections read `props.data` (declare a `data` prop) instead of fall-through `attrs`; add a company-injecting stub helper
+- [X] T007 Update Phase 4 renderer specs (`dynamic-section.spec.ts`, `slice-isolation.spec.ts`, `validated-input.spec.ts`, `edge-cases.spec.ts`, `fallback.spec.ts`, `site-renderer.spec.ts`) to assert the `:data` slice binding and provide a `company` in `SiteRenderer` mounts
+- [X] T008 [P] Create a theme→CSS-vars helper in `sites/core/components/sections/useThemeVars.ts` that maps the injected `ThemeConfig` (colors/typography/radius/spacing) to inline CSS custom properties for blocks to consume
+- [X] T009 [P] Create a shared section test helper in `sites/core/components/sections/__tests__/helpers.ts` that mounts a block with `useSiteTheme`/`useSiteCompany` providers (direct-mount) and a helper to render a config through `SiteRenderer`
+- [X] T010 Create the registration scaffold `sites/core/components/sections/register.ts` (empty, to be filled in T028), export it from `sites/core/components/sections/index.ts`, and create `app/plugins/register-sections.ts` importing `register.ts` for its boot side effect
 
 **Checkpoint**: Renderer binds `:data`, company channel exists, test helpers ready, registration wired.
 
@@ -66,37 +66,37 @@ in order from configuration alone.
 
 ### Schemas (source of truth — define full field set incl. variants + optionals)
 
-- [ ] T011 [P] [US1] Create `heroSchema` + `HeroConfig` in `sites/core/schemas/hero.ts` (variant `centered|split|minimal` default `centered`; `heading` required; `subheading`/`cta`/`secondaryCta`/`media` optional) per data-model
-- [ ] T012 [P] [US1] Create `aboutSchema` + `AboutConfig` in `sites/core/schemas/about.ts` (variant `text|media-left|media-right` default `text`; `heading`+`body` required; `media`/`highlights` optional)
-- [ ] T013 [P] [US1] Create `servicesSchema` + `ServicesConfig` in `sites/core/schemas/services.ts` (variant `grid|list` default `grid`; `items` required array of `{title required, description/icon/media/cta optional}`; `heading` optional)
-- [ ] T014 [P] [US1] Create `ctaSchema` + `CtaConfig` in `sites/core/schemas/cta.ts` (variant `banner|boxed` default `banner`; `heading`+`cta` required; `body`/`secondaryCta` optional)
-- [ ] T015 [P] [US1] Create `testimonialsSchema` + `TestimonialsConfig` in `sites/core/schemas/testimonials.ts` (variant `grid|carousel` default `grid`; `items` required array of `{quote+author required, role/avatar/rating optional}`; `heading` optional)
-- [ ] T016 [P] [US1] Create `faqSchema` + `FaqConfig` in `sites/core/schemas/faq.ts` (variant `accordion|list` default `accordion`; `items` required array of `{question+answer required}`; `heading` optional)
-- [ ] T017 [P] [US1] Create `contactSchema` + `ContactConfig` in `sites/core/schemas/contact.ts` (variant `split|stacked` default `split`; `showForm` default false; `heading`/`intro`/`hours`/`mapEmbedUrl`/`channels{email,phone,address}` optional)
-- [ ] T018 [P] [US1] Create `footerSchema` + `FooterConfig` in `sites/core/schemas/footer.ts` (variant `columns|minimal` default `columns`; `showSocial` default true; `tagline`/`linkGroups`/`legal` optional)
-- [ ] T019 [US1] Re-export all eight schemas + inferred types from `sites/core/schemas/index.ts` (depends on T011–T018)
+- [X] T011 [P] [US1] Create `heroSchema` + `HeroConfig` in `sites/core/schemas/hero.ts` (variant `centered|split|minimal` default `centered`; `heading` required; `subheading`/`cta`/`secondaryCta`/`media` optional) per data-model
+- [X] T012 [P] [US1] Create `aboutSchema` + `AboutConfig` in `sites/core/schemas/about.ts` (variant `text|media-left|media-right` default `text`; `heading`+`body` required; `media`/`highlights` optional)
+- [X] T013 [P] [US1] Create `servicesSchema` + `ServicesConfig` in `sites/core/schemas/services.ts` (variant `grid|list` default `grid`; `items` required array of `{title required, description/icon/media/cta optional}`; `heading` optional)
+- [X] T014 [P] [US1] Create `ctaSchema` + `CtaConfig` in `sites/core/schemas/cta.ts` (variant `banner|boxed` default `banner`; `heading`+`cta` required; `body`/`secondaryCta` optional)
+- [X] T015 [P] [US1] Create `testimonialsSchema` + `TestimonialsConfig` in `sites/core/schemas/testimonials.ts` (variant `grid|carousel` default `grid`; `items` required array of `{quote+author required, role/avatar/rating optional}`; `heading` optional)
+- [X] T016 [P] [US1] Create `faqSchema` + `FaqConfig` in `sites/core/schemas/faq.ts` (variant `accordion|list` default `accordion`; `items` required array of `{question+answer required}`; `heading` optional)
+- [X] T017 [P] [US1] Create `contactSchema` + `ContactConfig` in `sites/core/schemas/contact.ts` (variant `split|stacked` default `split`; `showForm` default false; `heading`/`intro`/`hours`/`mapEmbedUrl`/`channels{email,phone,address}` optional)
+- [X] T018 [P] [US1] Create `footerSchema` + `FooterConfig` in `sites/core/schemas/footer.ts` (variant `columns|minimal` default `columns`; `showSocial` default true; `tagline`/`linkGroups`/`legal` optional)
+- [X] T019 [US1] Re-export all eight schemas + inferred types from `sites/core/schemas/index.ts` (depends on T011–T018)
 
 ### Block components (full SFCs: all variants + optional handling; Contact/Footer company wiring deferred to US2)
 
-- [ ] T020 [P] [US1] Create `sites/core/components/sections/HeroSection.vue` — `defineProps<BlockProps<HeroConfig>>()`, semantic `<section>`, all variants, optional regions via `v-if`, theme vars via `useThemeVars`
-- [ ] T021 [P] [US1] Create `sites/core/components/sections/AboutSection.vue` (BlockProps<AboutConfig>, variants + optional media/highlights)
-- [ ] T022 [P] [US1] Create `sites/core/components/sections/ServicesSection.vue` (BlockProps<ServicesConfig>, grid/list variants, `v-for` items, empty array → nothing)
-- [ ] T023 [P] [US1] Create `sites/core/components/sections/CtaSection.vue` (BlockProps<CtaConfig>, banner/boxed variants, primary CTA + optional secondary)
-- [ ] T024 [P] [US1] Create `sites/core/components/sections/TestimonialsSection.vue` (BlockProps<TestimonialsConfig>, grid/carousel variants, `v-for` items)
-- [ ] T025 [P] [US1] Create `sites/core/components/sections/FaqSection.vue` (BlockProps<FaqConfig>, accordion/list variants, `v-for` items)
-- [ ] T026 [P] [US1] Create `sites/core/components/sections/ContactSection.vue` (BlockProps<ContactConfig>, split/stacked variants, renders own `channels`/`hours`/`map`/form-structure; company fallback added in US2)
-- [ ] T027 [P] [US1] Create `sites/core/components/sections/FooterSection.vue` (BlockProps<FooterConfig>, columns/minimal variants, renders own `linkGroups`/`legal`/`tagline`; company fallback added in US2)
+- [X] T020 [P] [US1] Create `sites/core/components/sections/HeroSection.vue` — `defineProps<BlockProps<HeroConfig>>()`, semantic `<section>`, all variants, optional regions via `v-if`, theme vars via `useThemeVars`
+- [X] T021 [P] [US1] Create `sites/core/components/sections/AboutSection.vue` (BlockProps<AboutConfig>, variants + optional media/highlights)
+- [X] T022 [P] [US1] Create `sites/core/components/sections/ServicesSection.vue` (BlockProps<ServicesConfig>, grid/list variants, `v-for` items, empty array → nothing)
+- [X] T023 [P] [US1] Create `sites/core/components/sections/CtaSection.vue` (BlockProps<CtaConfig>, banner/boxed variants, primary CTA + optional secondary)
+- [X] T024 [P] [US1] Create `sites/core/components/sections/TestimonialsSection.vue` (BlockProps<TestimonialsConfig>, grid/carousel variants, `v-for` items)
+- [X] T025 [P] [US1] Create `sites/core/components/sections/FaqSection.vue` (BlockProps<FaqConfig>, accordion/list variants, `v-for` items)
+- [X] T026 [P] [US1] Create `sites/core/components/sections/ContactSection.vue` (BlockProps<ContactConfig>, split/stacked variants, renders own `channels`/`hours`/`map`/form-structure; company fallback added in US2)
+- [X] T027 [P] [US1] Create `sites/core/components/sections/FooterSection.vue` (BlockProps<FooterConfig>, columns/minimal variants, renders own `linkGroups`/`legal`/`tagline`; company fallback added in US2)
 
 ### Registration + sample sites + tests
 
-- [ ] T028 [US1] Fill `sites/core/components/sections/register.ts` with eight `registerSection(defineSection('<type>', <schema>))` + `registerSectionComponent('<type>', <Section>)` pairs (depends on T011–T018, T020–T027)
-- [ ] T029 [P] [US1] Create `sites/templates/clinic/config.ts` exporting a `WebsiteConfig` orchestrating hero→services→testimonials→faq→contact→footer with clinic content
-- [ ] T030 [P] [US1] Create `sites/templates/lawyer/config.ts` (`WebsiteConfig` for a lawyer: hero→about→services→cta→contact→footer)
-- [ ] T031 [P] [US1] Create `sites/templates/restaurant/config.ts` (`WebsiteConfig`: hero→about→services(menu)→testimonials→contact→footer)
-- [ ] T032 [P] [US1] Create `sites/templates/school/config.ts` (`WebsiteConfig`: hero→about→services→faq→cta→contact→footer)
-- [ ] T033 [P] [US1] Create `sites/templates/local-business/config.ts` (`WebsiteConfig`: hero→services→cta→testimonials→contact→footer)
-- [ ] T034 [US1] Create `sites/templates/__tests__/verticals.spec.ts` — for each of the five configs: `validateWebsiteConfig` passes, render through `SiteRenderer`, assert every section type renders in configured order (depends on T028–T033)
-- [ ] T035 [US1] Create `sites/core/components/sections/__tests__/registry.spec.ts` asserting all eight types are present in BOTH the schema registry (`registeredSectionTypes`) and component registry (`registeredSectionComponents`) after importing `register.ts`
+- [X] T028 [US1] Fill `sites/core/components/sections/register.ts` with eight `registerSection(defineSection('<type>', <schema>))` + `registerSectionComponent('<type>', <Section>)` pairs (depends on T011–T018, T020–T027)
+- [X] T029 [P] [US1] Create `sites/templates/clinic/config.ts` exporting a `WebsiteConfig` orchestrating hero→services→testimonials→faq→contact→footer with clinic content
+- [X] T030 [P] [US1] Create `sites/templates/lawyer/config.ts` (`WebsiteConfig` for a lawyer: hero→about→services→cta→contact→footer)
+- [X] T031 [P] [US1] Create `sites/templates/restaurant/config.ts` (`WebsiteConfig`: hero→about→services(menu)→testimonials→contact→footer)
+- [X] T032 [P] [US1] Create `sites/templates/school/config.ts` (`WebsiteConfig`: hero→about→services→faq→cta→contact→footer)
+- [X] T033 [P] [US1] Create `sites/templates/local-business/config.ts` (`WebsiteConfig`: hero→services→cta→testimonials→contact→footer)
+- [X] T034 [US1] Create `sites/templates/__tests__/verticals.spec.ts` — for each of the five configs: `validateWebsiteConfig` passes, render through `SiteRenderer`, assert every section type renders in configured order (depends on T028–T033)
+- [X] T035 [US1] Create `sites/core/components/sections/__tests__/registry.spec.ts` asserting all eight types are present in BOTH the schema registry (`registeredSectionTypes`) and component registry (`registeredSectionComponents`) after importing `register.ts`
 
 **Checkpoint**: A complete single-page site renders from config for all five verticals — MVP done.
 
@@ -111,11 +111,11 @@ client/niche content, and Contact/Footer source cross-cutting identity from site
 (isolation); render blocks with minimal config → no stray business text; Contact/Footer show
 `company` info with no per-block duplication.
 
-- [ ] T036 [US2] Wire `ContactSection.vue` to `useSiteCompany()` — when `data.channels.{email,phone,address}` absent, fall back to injected `company.contact`; explicit `channels` take precedence (FR-011)
-- [ ] T037 [US2] Wire `FooterSection.vue` to `useSiteCompany()` — render `company.social` when `showSocial`; fall back `tagline`→`company.tagline`, `legal`→`company.legal.legalName`
-- [ ] T038 [P] [US2] Create `sites/core/components/sections/__tests__/reuse.spec.ts` — each of the eight blocks rendered with two distinct content sets produces its own output with no cross-leak (slice isolation)
-- [ ] T039 [P] [US2] Create `sites/core/components/sections/__tests__/neutrality.spec.ts` — each block rendered with only required content contains no hardcoded client/niche strings (output derives solely from config)
-- [ ] T040 [US2] Create `sites/core/components/sections/__tests__/company-sourcing.spec.ts` — Contact/Footer mounted under a provided `company` render its contact/social; per-block `channels` override the company value (depends on T036, T037)
+- [X] T036 [US2] Wire `ContactSection.vue` to `useSiteCompany()` — when `data.channels.{email,phone,address}` absent, fall back to injected `company.contact`; explicit `channels` take precedence (FR-011)
+- [X] T037 [US2] Wire `FooterSection.vue` to `useSiteCompany()` — render `company.social` when `showSocial`; fall back `tagline`→`company.tagline`, `legal`→`company.legal.legalName`
+- [X] T038 [P] [US2] Create `sites/core/components/sections/__tests__/reuse.spec.ts` — each of the eight blocks rendered with two distinct content sets produces its own output with no cross-leak (slice isolation)
+- [X] T039 [P] [US2] Create `sites/core/components/sections/__tests__/neutrality.spec.ts` — each block rendered with only required content contains no hardcoded client/niche strings (output derives solely from config)
+- [X] T040 [US2] Create `sites/core/components/sections/__tests__/company-sourcing.spec.ts` — Contact/Footer mounted under a provided `company` render its contact/social; per-block `channels` override the company value (depends on T036, T037)
 
 **Checkpoint**: Blocks proven reusable + neutral; identity sourced once from site level.
 
@@ -129,9 +129,9 @@ the single default; unknown variant falls back to default.
 **Independent Test**: Render each block with each declared variant, with no variant, and with an
 unknown variant value; presentation changes per selection and unselected/unknown use the default.
 
-- [ ] T041 [P] [US3] Create `sites/core/components/sections/__tests__/variants-a.spec.ts` — for hero, about, services, cta: each declared variant renders its distinct markup; omitted variant → default
-- [ ] T042 [P] [US3] Create `sites/core/components/sections/__tests__/variants-b.spec.ts` — for testimonials, faq, contact, footer: each declared variant renders; omitted → default
-- [ ] T043 [P] [US3] Create `sites/core/components/sections/__tests__/variant-fallback.spec.ts` — an unknown `variant` value is rejected by each schema and resolves to the block's default (never undefined state)
+- [X] T041 [P] [US3] Create `sites/core/components/sections/__tests__/variants-a.spec.ts` — for hero, about, services, cta: each declared variant renders its distinct markup; omitted variant → default
+- [X] T042 [P] [US3] Create `sites/core/components/sections/__tests__/variants-b.spec.ts` — for testimonials, faq, contact, footer: each declared variant renders; omitted → default
+- [X] T043 [P] [US3] Create `sites/core/components/sections/__tests__/variant-fallback.spec.ts` — an unknown `variant` value is rejected by each schema and resolves to the block's default (never undefined state)
 
 **Checkpoint**: All eight blocks switch presentation by config only.
 
@@ -145,10 +145,10 @@ placeholders); list blocks handle small/empty lists; missing required content is
 **Independent Test**: Render each block with required-only and with full content; omitted parts are
 absent; empty `items` renders nothing; required-missing config fails validation.
 
-- [ ] T044 [P] [US4] Create `sites/core/components/sections/__tests__/schemas.spec.ts` — per block: defaults applied (variant + defaulted fields), required-missing rejected by `safeParse`, unknown keys stripped
-- [ ] T045 [P] [US4] Create `sites/core/components/sections/__tests__/degradation.spec.ts` — each block rendered with required-only vs full content: optional regions absent in minimal case, no empty placeholders
-- [ ] T046 [P] [US4] Create `sites/core/components/sections/__tests__/empty-lists.spec.ts` — services/testimonials/faq with `items: []` render nothing for the list region (no reserved space)
-- [ ] T047 [US4] Add partial-channel coverage to `company-sourcing.spec.ts` (or a new `contact-partial.spec.ts`) — Contact with only some of email/phone/address renders only the resolved channels
+- [X] T044 [P] [US4] Create `sites/core/components/sections/__tests__/schemas.spec.ts` — per block: defaults applied (variant + defaulted fields), required-missing rejected by `safeParse`, unknown keys stripped
+- [X] T045 [P] [US4] Create `sites/core/components/sections/__tests__/degradation.spec.ts` — each block rendered with required-only vs full content: optional regions absent in minimal case, no empty placeholders
+- [X] T046 [P] [US4] Create `sites/core/components/sections/__tests__/empty-lists.spec.ts` — services/testimonials/faq with `items: []` render nothing for the list region (no reserved space)
+- [X] T047 [US4] Add partial-channel coverage to `company-sourcing.spec.ts` (or a new `contact-partial.spec.ts`) — Contact with only some of email/phone/address renders only the resolved channels
 
 **Checkpoint**: All eight blocks degrade gracefully; validation gates required content.
 
@@ -156,9 +156,9 @@ absent; empty `items` renders nothing; required-missing config fails validation.
 
 ## Phase 7: Polish & Cross-Cutting Concerns
 
-- [ ] T048 [P] Accessibility/responsive pass across the eight SFCs: semantic landmarks, config-driven `alt` text, visible focus states, mobile-first layout (block-set-contract B8)
-- [ ] T049 [P] Run `quickstart.md` validation — `npm run dev`, visually confirm each of the five vertical sample sites renders coherently
-- [ ] T050 Run full suite `npm test` green; update `sites/core/components/sections/README.md` and `sites/templates/README.md` to document the eight available blocks and the five sample verticals
+- [X] T048 [P] Accessibility/responsive pass across the eight SFCs: semantic landmarks, config-driven `alt` text, visible focus states, mobile-first layout (block-set-contract B8)
+- [X] T049 [P] Run `quickstart.md` validation — `npm run dev`, visually confirm each of the five vertical sample sites renders coherently
+- [X] T050 Run full suite `npm test` green; update `sites/core/components/sections/README.md` and `sites/templates/README.md` to document the eight available blocks and the five sample verticals
 
 ---
 
