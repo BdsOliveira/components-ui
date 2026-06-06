@@ -4,7 +4,7 @@
 
 **Created**: 2026-06-05
 
-**Status**: Draft
+**Status**: Completed
 
 **Input**: User description: "FASE 2 — Definir o padrão dos blocos. Antes de criar componentes, defina o padrão universal. Todos os blocos: recebem props tipadas, recebem config JSON, possuem variantes, possuem slots opcionais, são independentes. Exemplo: `<HeroSection :data="config.hero" />` e NÃO `<HeroSection title="..." subtitle="..." />`. Porque seu sistema inteiro será JSON driven."
 

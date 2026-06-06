@@ -4,7 +4,7 @@
 
 **Created**: 2026-06-05
 
-**Status**: Draft
+**Status**: Completed
 
 **Input**: User description: "FASE 3 — Criar o schema central. Como um site é representado. `interface WebsiteConfig { company: CompanyConfig; theme: ThemeConfig; sections: Section[] }`. Depois `type Section = HeroSection | ServicesSection | TestimonialsSection`. Onboarding gera isso, template consome isso, renderer renderiza isso. Um mini CMS headless."
 
