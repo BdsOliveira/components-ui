@@ -1,0 +1,36 @@
+{
+  "template": "clinic",
+  "company": {
+    "name": "Clínica Saúde",
+    "tagline": "Cuidado de saúde moderno para toda a família",
+    "contact": {
+      "email": "contato@clinicasaude.example",
+      "phone": "+55 11 4000 0000",
+      "address": "Av. Paulista, 1000 — São Paulo"
+    }
+  },
+  "theme": {
+    "colors": { "primary": "#15803d", "background": "#ffffff", "foreground": "#0f172a" },
+    "mode": "light"
+  },
+  "content": {
+    "hero": {
+      "variant": "split",
+      "heading": "Sua saúde em boas mãos",
+      "subheading": "Atendimento humano e moderno no coração de São Paulo.",
+      "cta": { "label": "Agendar consulta", "href": "#contact" },
+      "media": {
+        "src": "/clients/clinica-saude/images/hero.jpg",
+        "alt": "Equipe da Clínica Saúde recebendo um paciente"
+      }
+    },
+    "services": {
+      "heading": "Especialidades",
+      "items": [
+        { "title": "Clínica geral", "description": "Consultas e acompanhamento para toda a família." },
+        { "title": "Pediatria", "description": "Cuidado especializado para crianças de todas as idades." },
+        { "title": "Cardiologia", "description": "Avaliação e prevenção da saúde do coração." }
+      ]
+    }
+  }
+}
