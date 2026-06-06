@@ -30,10 +30,10 @@ description: "Task list for Dynamic Renderer (Phase 4)"
 
 **Purpose**: Confirm the toolkit, wire the engine components into Nuxt, add the test runner. Zero new **runtime** dependencies.
 
-- [ ] T001 Verify the renderer's runtime toolkit already resolves — `vue` (built-in `<component :is>`) and `zod` — and confirm Phase 3 exports are importable from `sites/core/schemas/index.ts` (`WebsiteConfig`, `validateWebsiteConfig`, `Section`, `ThemeConfig`); no new runtime dependency is added (plan.md Complexity Tracking)
-- [ ] T002 [P] Add the test runner as a devDependency in `package.json` — `vitest` + `@nuxt/test-utils` + `@vue/test-utils` + `happy-dom` (or `jsdom`) — and a `test` script (`"test": "vitest run"`); these are dev-only (plan.md Testing)
-- [ ] T003 [P] Add `vitest.config.ts` at repo root configuring the Vue/Nuxt test environment (`environment: 'nuxt'` or happy-dom) so `.vue` SFCs mount in tests
-- [ ] T004 Wire engine components into Nuxt in `nuxt.config.ts` — add `components: { dirs: [{ path: '~~/sites/core/components', pathPrefix: false }] }` so `<SiteRenderer>` / `<DynamicSection>` resolve in pages; section components stay registry-only, NOT auto-imported (research D6)
+- [X] T001 Verify the renderer's runtime toolkit already resolves — `vue` (built-in `<component :is>`) and `zod` — and confirm Phase 3 exports are importable from `sites/core/schemas/index.ts` (`WebsiteConfig`, `validateWebsiteConfig`, `Section`, `ThemeConfig`); no new runtime dependency is added (plan.md Complexity Tracking)
+- [X] T002 [P] Add the test runner as a devDependency in `package.json` — `vitest` + `@nuxt/test-utils` + `@vue/test-utils` + `happy-dom` (or `jsdom`) — and a `test` script (`"test": "vitest run"`); these are dev-only (plan.md Testing)
+- [X] T003 [P] Add `vitest.config.ts` at repo root configuring the Vue/Nuxt test environment (`environment: 'nuxt'` or happy-dom) so `.vue` SFCs mount in tests
+- [X] T004 Wire engine components into Nuxt in `nuxt.config.ts` — add `components: { dirs: [{ path: '~~/sites/core/components', pathPrefix: false }] }` so `<SiteRenderer>` / `<DynamicSection>` resolve in pages; section components stay registry-only, NOT auto-imported (research D6)
 
 **Checkpoint**: Toolkit available, engine components resolvable, tests runnable.
 
@@ -45,8 +45,8 @@ description: "Task list for Dynamic Renderer (Phase 4)"
 
 **⚠️ CRITICAL**: Rendering tests can only assert behavior against *registered* section types; the fixture helper is the shared precondition for US1–US7 tests.
 
-- [ ] T005 Create the test fixture helper in `sites/core/components/render/__tests__/fixtures.ts` — exports `makeStubSection(type)` (a minimal Vue stub component rendering an identifiable marker + its received props) and `registerStub(type, component)` that registers BOTH the schema (`registerSection(defineSection(type, z.object({...})))`) and the component (`registerSectionComponent(type, component)`), plus a `resetRegistries()` calling `clearSectionRegistry()` + `clearSectionComponentRegistry()` for `afterEach`
-- [ ] T006 [P] Confirm the Phase 3 input contract is importable and stable for the renderer — `validateWebsiteConfig`, `WebsiteConfig`, `ThemeConfig`, `Section`, and registry helpers (`clearSectionRegistry`) — from `sites/core/schemas/index.ts`; no Phase 3 source is modified (plan.md Structure Decision)
+- [X] T005 Create the test fixture helper in `sites/core/components/render/__tests__/fixtures.ts` — exports `makeStubSection(type)` (a minimal Vue stub component rendering an identifiable marker + its received props) and `registerStub(type, component)` that registers BOTH the schema (`registerSection(defineSection(type, z.object({...})))`) and the component (`registerSectionComponent(type, component)`), plus a `resetRegistries()` calling `clearSectionRegistry()` + `clearSectionComponentRegistry()` for `afterEach`
+- [X] T006 [P] Confirm the Phase 3 input contract is importable and stable for the renderer — `validateWebsiteConfig`, `WebsiteConfig`, `ThemeConfig`, `Section`, and registry helpers (`clearSectionRegistry`) — from `sites/core/schemas/index.ts`; no Phase 3 source is modified (plan.md Structure Decision)
 
 **Checkpoint**: Fixtures ready — section types can be stubbed and registered per test; story phases can begin.
 
@@ -62,11 +62,11 @@ description: "Task list for Dynamic Renderer (Phase 4)"
 
 ### Tests for User Story 3 ⚠️
 
-- [ ] T007 [P] [US3] Registry test in `sites/core/components/sections/__tests__/registry.spec.ts` — `registerSectionComponent('x', Stub)` then `resolveSectionComponent('x')` returns `Stub`; `resolveSectionComponent('missing')` returns `undefined`; re-register `'x'` replaces; `registeredSectionComponents()` lists keys; `clearSectionComponentRegistry()` empties it; an unregistered registry resolves nothing (empty baseline, R13)
+- [X] T007 [P] [US3] Registry test in `sites/core/components/sections/__tests__/registry.spec.ts` — `registerSectionComponent('x', Stub)` then `resolveSectionComponent('x')` returns `Stub`; `resolveSectionComponent('missing')` returns `undefined`; re-register `'x'` replaces; `registeredSectionComponents()` lists keys; `clearSectionComponentRegistry()` empties it; an unregistered registry resolves nothing (empty baseline, R13)
 
 ### Implementation for User Story 3
 
-- [ ] T008 [US3] Create the component registry in `sites/core/components/sections/registry.ts` — a module-level `Map<string, Component>` with `registerSectionComponent(type, component)` (idempotent-per-type, replace on re-register), `resolveSectionComponent(type): Component | undefined`, `registeredSectionComponents(): string[]`, and `clearSectionComponentRegistry()`; ships empty; neutral, no client content (research D2, R4)
+- [X] T008 [US3] Create the component registry in `sites/core/components/sections/registry.ts` — a module-level `Map<string, Component>` with `registerSectionComponent(type, component)` (idempotent-per-type, replace on re-register), `resolveSectionComponent(type): Component | undefined`, `registeredSectionComponents(): string[]`, and `clearSectionComponentRegistry()`; ships empty; neutral, no client content (research D2, R4)
 
 **Checkpoint**: A type maps to a component through one authoritative place; resolution is O(1).
 
@@ -80,11 +80,11 @@ description: "Task list for Dynamic Renderer (Phase 4)"
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T009 [P] [US2] DynamicSection dispatch test in `sites/core/components/render/__tests__/dynamic-section.spec.ts` — mount `<DynamicSection :section="{ type: 'hero', ...}">` with `'hero'` stub registered; assert the hero stub rendered; register a second type `'services'` and assert a second `<DynamicSection>` renders it with no source change (extensibility, FR-007)
+- [X] T009 [P] [US2] DynamicSection dispatch test in `sites/core/components/render/__tests__/dynamic-section.spec.ts` — mount `<DynamicSection :section="{ type: 'hero', ...}">` with `'hero'` stub registered; assert the hero stub rendered; register a second type `'services'` and assert a second `<DynamicSection>` renders it with no source change (extensibility, FR-007)
 
 ### Implementation for User Story 2
 
-- [ ] T010 [US2] Create `sites/core/components/render/DynamicSection.vue` — `defineProps<{ section: Section }>()`, `const resolved = computed(() => resolveSectionComponent(props.section.type))`, template `<component :is="resolved" v-if="resolved" v-bind="section" />`; no `v-if`/`switch` on concrete type values (R3, research D1)
+- [X] T010 [US2] Create `sites/core/components/render/DynamicSection.vue` — `defineProps<{ section: Section }>()`, `const resolved = computed(() => resolveSectionComponent(props.section.type))`, template `<component :is="resolved" v-if="resolved" v-bind="section" />`; no `v-if`/`switch` on concrete type values (R3, research D1)
 
 **Checkpoint**: One dynamic renderer dispatches any registered single section item.
 
@@ -98,12 +98,12 @@ description: "Task list for Dynamic Renderer (Phase 4)"
 
 ### Tests for User Story 1 ⚠️
 
-- [ ] T011 [P] [US1] SiteRenderer order test in `sites/core/components/render/__tests__/site-renderer.spec.ts` — render a config with sections `[hero, services, hero]` (stubs registered); assert three sections rendered in that exact DOM order, each by its mapped stub, and the repeated `hero` renders twice independently (R1/R2, FR-002/FR-007)
-- [ ] T012 [P] [US1] SiteRenderer keying test in the same spec — assert each item is keyed by `section.id ?? `${index}:${type}`` (stable across re-render; an item with an explicit `id` uses it) (R10, FR-016, research D3)
+- [X] T011 [P] [US1] SiteRenderer order test in `sites/core/components/render/__tests__/site-renderer.spec.ts` — render a config with sections `[hero, services, hero]` (stubs registered); assert three sections rendered in that exact DOM order, each by its mapped stub, and the repeated `hero` renders twice independently (R1/R2, FR-002/FR-007)
+- [X] T012 [P] [US1] SiteRenderer keying test in the same spec — assert each item is keyed by `section.id ?? `${index}:${type}`` (stable across re-render; an item with an explicit `id` uses it) (R10, FR-016, research D3)
 
 ### Implementation for User Story 1
 
-- [ ] T013 [US1] Create `sites/core/components/render/SiteRenderer.vue` — `defineProps<{ config: WebsiteConfig }>()`, template `v-for="(section, index) in config.sections"` rendering `<DynamicSection :key="(section as any).id ?? `${index}:${section.type}`" :section="section" />`; preserves list order, no reordering (R1/R2/R10)
+- [X] T013 [US1] Create `sites/core/components/render/SiteRenderer.vue` — `defineProps<{ config: WebsiteConfig }>()`, template `v-for="(section, index) in config.sections"` rendering `<DynamicSection :key="(section as any).id ?? `${index}:${section.type}`" :section="section" />`; preserves list order, no reordering (R1/R2/R10)
 
 **Checkpoint**: 🎯 **MVP** — a whole page renders from `WebsiteConfig.sections` in order via the registry. US1+US2+US3 functional and testable independently.
 
@@ -117,11 +117,11 @@ description: "Task list for Dynamic Renderer (Phase 4)"
 
 ### Tests for User Story 4 ⚠️
 
-- [ ] T014 [P] [US4] Slice-isolation test in `sites/core/components/render/__tests__/slice-isolation.spec.ts` — render two sibling sections with distinct props; assert each stub's received props equal its own item (incl. `type`) and contain no sibling fields; assert content rendered derives only from the passed slice (R5, FR-008/FR-009)
+- [X] T014 [P] [US4] Slice-isolation test in `sites/core/components/render/__tests__/slice-isolation.spec.ts` — render two sibling sections with distinct props; assert each stub's received props equal its own item (incl. `type`) and contain no sibling fields; assert content rendered derives only from the passed slice (R5, FR-008/FR-009)
 
 ### Implementation for User Story 4
 
-- [ ] T015 [US4] Confirm `DynamicSection.vue` binds exactly the section item via `v-bind="section"` (no merged/shared/parent props leak to the resolved component); adjust only if T014 reveals leakage (R5) — implemented in T010, verified here
+- [X] T015 [US4] Confirm `DynamicSection.vue` binds exactly the section item via `v-bind="section"` (no merged/shared/parent props leak to the resolved component); adjust only if T014 reveals leakage (R5) — implemented in T010, verified here
 
 **Checkpoint**: Sections are data-driven by their own slice only; no cross-section leakage.
 
@@ -135,13 +135,13 @@ description: "Task list for Dynamic Renderer (Phase 4)"
 
 ### Tests for User Story 5 ⚠️
 
-- [ ] T016 [P] [US5] Missing-component test in `sites/core/components/render/__tests__/fallback.spec.ts` — render `[hero, ghost, services]` where `ghost` has a schema type but NO component; assert nothing visible for `ghost`, a dev-only warning naming `ghost` + index is emitted, and `hero`/`services` still render; no throw (R6, FR-010/FR-011, research D4)
-- [ ] T017 [P] [US5] Error-isolation test in the same spec — register a `boom` stub that throws on render; render `[hero, boom, services]`; assert `boom` is contained (degrades like missing component) and `hero`/`services` still render (R6, FR-011, research D5, SC-006)
+- [X] T016 [P] [US5] Missing-component test in `sites/core/components/render/__tests__/fallback.spec.ts` — render `[hero, ghost, services]` where `ghost` has a schema type but NO component; assert nothing visible for `ghost`, a dev-only warning naming `ghost` + index is emitted, and `hero`/`services` still render; no throw (R6, FR-010/FR-011, research D4)
+- [X] T017 [P] [US5] Error-isolation test in the same spec — register a `boom` stub that throws on render; render `[hero, boom, services]`; assert `boom` is contained (degrades like missing component) and `hero`/`services` still render (R6, FR-011, research D5, SC-006)
 
 ### Implementation for User Story 5
 
-- [ ] T018 [US5] Add fallback handling to `sites/core/components/render/DynamicSection.vue` — when `!resolved`, render nothing and emit a dev-only `console.warn` (suppressed in production) naming `type` + a provided `index`; wrap the resolved component in an `onErrorCaptured` boundary returning `false` so a section throw is contained and degrades to the same fallback (research D4/D5, R6)
-- [ ] T019 [US5] Pass the section's `index` from `SiteRenderer.vue` to `DynamicSection` (prop) so fallback warnings can identify the failing item by position (supports T016/T018 diagnostics)
+- [X] T018 [US5] Add fallback handling to `sites/core/components/render/DynamicSection.vue` — when `!resolved`, render nothing and emit a dev-only `console.warn` (suppressed in production) naming `type` + a provided `index`; wrap the resolved component in an `onErrorCaptured` boundary returning `false` so a section throw is contained and degrades to the same fallback (research D4/D5, R6)
+- [X] T019 [US5] Pass the section's `index` from `SiteRenderer.vue` to `DynamicSection` (prop) so fallback warnings can identify the failing item by position (supports T016/T018 diagnostics)
 
 **Checkpoint**: A missing component or a throwing section never crashes the page; siblings unaffected.
 
@@ -155,11 +155,11 @@ description: "Task list for Dynamic Renderer (Phase 4)"
 
 ### Tests for User Story 6 ⚠️
 
-- [ ] T020 [P] [US6] Validated-input test in `sites/core/components/render/__tests__/validated-input.spec.ts` — feed raw config to `validateWebsiteConfig`; on `valid` mount `<SiteRenderer :config="result.data">` and assert it renders; on invalid assert `result.valid === false` and that nothing is rendered (no broken page); assert `SiteRenderer` source calls no validation itself (trusts the gate, R8/FR-012)
+- [X] T020 [P] [US6] Validated-input test in `sites/core/components/render/__tests__/validated-input.spec.ts` — feed raw config to `validateWebsiteConfig`; on `valid` mount `<SiteRenderer :config="result.data">` and assert it renders; on invalid assert `result.valid === false` and that nothing is rendered (no broken page); assert `SiteRenderer` source calls no validation itself (trusts the gate, R8/FR-012)
 
 ### Implementation for User Story 6
 
-- [ ] T021 [US6] Document and lock the render-path entry contract in `sites/core/components/render/SiteRenderer.vue` (doc comment) — input MUST be a Phase-3-validated `WebsiteConfig`; the integration page calls `validateWebsiteConfig(raw)` and mounts `SiteRenderer` only with `result.data` when `result.valid`; `SiteRenderer` performs no internal validation (R8, FR-012/FR-013, research D7)
+- [X] T021 [US6] Document and lock the render-path entry contract in `sites/core/components/render/SiteRenderer.vue` (doc comment) — input MUST be a Phase-3-validated `WebsiteConfig`; the integration page calls `validateWebsiteConfig(raw)` and mounts `SiteRenderer` only with `result.data` when `result.valid`; `SiteRenderer` performs no internal validation (R8, FR-012/FR-013, research D7)
 
 **Checkpoint**: Only Phase-3-validated config reaches the renderer; no duplicated/contradictory validation.
 
@@ -173,12 +173,12 @@ description: "Task list for Dynamic Renderer (Phase 4)"
 
 ### Tests for User Story 7 ⚠️
 
-- [ ] T022 [P] [US7] Theme propagation test in `sites/core/composables/__tests__/use-site-theme.spec.ts` — render a `SiteRenderer` whose theme is `{ colors: { primary: '#abc' }, mode: 'dark' }` with two stubs that inject `useSiteTheme()`; assert both receive the same `ThemeConfig`; re-render with a changed theme and assert both reflect the new value (R11, FR-015, SC-009)
+- [X] T022 [P] [US7] Theme propagation test in `sites/core/composables/__tests__/use-site-theme.spec.ts` — render a `SiteRenderer` whose theme is `{ colors: { primary: '#abc' }, mode: 'dark' }` with two stubs that inject `useSiteTheme()`; assert both receive the same `ThemeConfig`; re-render with a changed theme and assert both reflect the new value (R11, FR-015, SC-009)
 
 ### Implementation for User Story 7
 
-- [ ] T023 [US7] Create `sites/core/composables/useSiteTheme.ts` — an `InjectionKey<ThemeConfig>`; overloaded `useSiteTheme(theme)` (provide) and `useSiteTheme()` (inject, returns the provided `ThemeConfig`); reuse the Phase 3 `ThemeConfig` type, define no new theme model (research D6, R11)
-- [ ] T024 [US7] Call `useSiteTheme(props.config.theme)` in `sites/core/components/render/SiteRenderer.vue` so the validated theme is provided to all rendered sections (R11, FR-015)
+- [X] T023 [US7] Create `sites/core/composables/useSiteTheme.ts` — an `InjectionKey<ThemeConfig>`; overloaded `useSiteTheme(theme)` (provide) and `useSiteTheme()` (inject, returns the provided `ThemeConfig`); reuse the Phase 3 `ThemeConfig` type, define no new theme model (research D6, R11)
+- [X] T024 [US7] Call `useSiteTheme(props.config.theme)` in `sites/core/components/render/SiteRenderer.vue` so the validated theme is provided to all rendered sections (R11, FR-015)
 
 **Checkpoint**: One shared theme reaches every section; changing `theme` re-skins the whole site via data.
 
@@ -188,11 +188,11 @@ description: "Task list for Dynamic Renderer (Phase 4)"
 
 **Purpose**: Edge-case proof, docs, and the end-to-end quickstart recipe.
 
-- [ ] T025 [P] Empty-`sections` test in `sites/core/components/render/__tests__/edge-cases.spec.ts` — render a valid `WebsiteConfig` with `sections: []`; assert a valid empty page, no error, no section rendered (R9, FR-014)
-- [ ] T026 [P] Empty-registry baseline test in the same spec — with both registries cleared, assert `sections: []` renders empty and that a non-empty list would already be rejected by `validateWebsiteConfig` (empty schema registry), so the renderer never sees an unmapped type in baseline (R13, FR-018)
-- [ ] T027 [P] Update `sites/core/components/README.md` and `sites/core/composables/README.md` — document `SiteRenderer`, `DynamicSection`, the section component registry, and `useSiteTheme`, pointing to `contracts/renderer-contract.md` as the source of truth
-- [ ] T028 [P] Extend the barrel/exports so the renderer surface is importable where intended — re-export `registerSectionComponent`, `resolveSectionComponent`, `registeredSectionComponents`, `clearSectionComponentRegistry` from `sites/core/components/sections/registry.ts` (and `useSiteTheme` from its module); confirm `~~/sites/core/...` import paths resolve under Nuxt 4
-- [ ] T029 Execute the `quickstart.md` recipe end to end with a throwaway fixture section (register schema + component, author a `WebsiteConfig`, validate, render via `SiteRenderer`, inject theme) and confirm every conformance-check row (R1–R13) holds; remove the throwaway afterward (no concrete section ships)
+- [X] T025 [P] Empty-`sections` test in `sites/core/components/render/__tests__/edge-cases.spec.ts` — render a valid `WebsiteConfig` with `sections: []`; assert a valid empty page, no error, no section rendered (R9, FR-014)
+- [X] T026 [P] Empty-registry baseline test in the same spec — with both registries cleared, assert `sections: []` renders empty and that a non-empty list would already be rejected by `validateWebsiteConfig` (empty schema registry), so the renderer never sees an unmapped type in baseline (R13, FR-018)
+- [X] T027 [P] Update `sites/core/components/README.md` and `sites/core/composables/README.md` — document `SiteRenderer`, `DynamicSection`, the section component registry, and `useSiteTheme`, pointing to `contracts/renderer-contract.md` as the source of truth
+- [X] T028 [P] Extend the barrel/exports so the renderer surface is importable where intended — re-export `registerSectionComponent`, `resolveSectionComponent`, `registeredSectionComponents`, `clearSectionComponentRegistry` from `sites/core/components/sections/registry.ts` (and `useSiteTheme` from its module); confirm `~~/sites/core/...` import paths resolve under Nuxt 4
+- [X] T029 Execute the `quickstart.md` recipe end to end with a throwaway fixture section (register schema + component, author a `WebsiteConfig`, validate, render via `SiteRenderer`, inject theme) and confirm every conformance-check row (R1–R13) holds; remove the throwaway afterward (no concrete section ships)
 
 ---
 
