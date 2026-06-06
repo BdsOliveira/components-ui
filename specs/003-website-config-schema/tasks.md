@@ -30,8 +30,8 @@ description: "Task list for Central Website Schema (Phase 3)"
 
 **Purpose**: Confirm the toolkit and homes already exist — Phase 3 adds **zero** new dependencies.
 
-- [ ] T001 Verify `zod` and `zod-to-json-schema` already resolve (`node -e "require('zod'); require('zod-to-json-schema')"`) at repo root — no new dependency is added in Phase 3 (plan.md Complexity Tracking)
-- [ ] T002 [P] Confirm the Phase 2 primitives exist and are exported from `sites/core/schemas/index.ts` (`defineBlockSchema`, `blockVariant`, `validateBlockConfig`, `blockJsonSchema`) — the Phase 3 modules build on them
+- [X] T001 Verify `zod` and `zod-to-json-schema` already resolve (`node -e "require('zod'); require('zod-to-json-schema')"`) at repo root — no new dependency is added in Phase 3 (plan.md Complexity Tracking)
+- [X] T002 [P] Confirm the Phase 2 primitives exist and are exported from `sites/core/schemas/index.ts` (`defineBlockSchema`, `blockVariant`, `validateBlockConfig`, `blockJsonSchema`) — the Phase 3 modules build on them
 
 **Checkpoint**: Toolkit available; Phase 3 modules have a home.
 
@@ -43,7 +43,7 @@ description: "Task list for Central Website Schema (Phase 3)"
 
 **⚠️ CRITICAL**: The `WebsiteConfig` composition root (US1) and whole-site validation (US6) export through this barrel; the leaf schemas must export through it for the root to import cleanly.
 
-- [ ] T003 Confirm `sites/core/schemas/index.ts` barrel is present and will be the single re-export surface for the Phase 3 exports (`companySchema`, `themeSchema`, section registry helpers + `Section`, `websiteConfigSchema` + `WebsiteConfig`, `validateWebsiteConfig`)
+- [X] T003 Confirm `sites/core/schemas/index.ts` barrel is present and will be the single re-export surface for the Phase 3 exports (`companySchema`, `themeSchema`, section registry helpers + `Section`, `websiteConfigSchema` + `WebsiteConfig`, `validateWebsiteConfig`)
 
 **Checkpoint**: Foundation ready — leaf schemas can now be added and the root can compose them.
 
@@ -61,9 +61,9 @@ description: "Task list for Central Website Schema (Phase 3)"
 
 ### Implementation for User Story 1
 
-- [ ] T004 [US1] Create `sites/core/schemas/website.ts`: `websiteConfigSchema = z.object({ company: companySchema, theme: themeSchema, sections: z.array(buildSectionSchema()) })` and `export type WebsiteConfig = z.infer<typeof websiteConfigSchema>` (data-model "WebsiteConfig"; `sections` ordered, empty allowed per W6)
-- [ ] T005 [US1] Re-export `websiteConfigSchema` and `WebsiteConfig` from `sites/core/schemas/index.ts`
-- [ ] T006 [US1] Document the single-`WebsiteConfig` rule (one object = `company` + `theme` + ordered `sections`, no info held outside it) in `sites/core/schemas/README.md`, linking `contracts/website-schema-contract.md` §W1
+- [X] T004 [US1] Create `sites/core/schemas/website.ts`: `websiteConfigSchema = z.object({ company: companySchema, theme: themeSchema, sections: z.array(buildSectionSchema()) })` and `export type WebsiteConfig = z.infer<typeof websiteConfigSchema>` (data-model "WebsiteConfig"; `sections` ordered, empty allowed per W6)
+- [X] T005 [US1] Re-export `websiteConfigSchema` and `WebsiteConfig` from `sites/core/schemas/index.ts`
+- [X] T006 [US1] Document the single-`WebsiteConfig` rule (one object = `company` + `theme` + ordered `sections`, no info held outside it) in `sites/core/schemas/README.md`, linking `contracts/website-schema-contract.md` §W1
 
 **Checkpoint**: A whole site is expressible as one typed `WebsiteConfig`. MVP core (with US2/US4/US5 leaves) complete.
 
@@ -77,9 +77,9 @@ description: "Task list for Central Website Schema (Phase 3)"
 
 ### Implementation for User Story 2
 
-- [ ] T007 [P] [US2] Create `sites/core/schemas/section.ts`: `defineSection(type, blockSchema)` = `blockSchema.extend({ type: z.literal(type) })` (flat member, research Decision 2); a single section **registry** (`type → member schema`); `registerSection(member)`; and `buildSectionSchema()` returning `z.discriminatedUnion('type', [...registered])` — or a defined **reject-all** element schema when the registry is empty (W6, Decision 4). Export `export type Section = z.infer<ReturnType<typeof buildSectionSchema>>`
-- [ ] T008 [US2] Re-export `defineSection`, `registerSection`, `buildSectionSchema`, and `Section` from `sites/core/schemas/index.ts`
-- [ ] T009 [US2] Document the `type`-keyed discriminated union, flat-member convention, unknown-`type` rejection, and empty-registry behavior in `sites/core/schemas/README.md`, linking §W3/§W6
+- [X] T007 [P] [US2] Create `sites/core/schemas/section.ts`: `defineSection(type, blockSchema)` = `blockSchema.extend({ type: z.literal(type) })` (flat member, research Decision 2); a single section **registry** (`type → member schema`); `registerSection(member)`; and `buildSectionSchema()` returning `z.discriminatedUnion('type', [...registered])` — or a defined **reject-all** element schema when the registry is empty (W6, Decision 4). Export `export type Section = z.infer<ReturnType<typeof buildSectionSchema>>`
+- [X] T008 [US2] Re-export `defineSection`, `registerSection`, `buildSectionSchema`, and `Section` from `sites/core/schemas/index.ts`
+- [X] T009 [US2] Document the `type`-keyed discriminated union, flat-member convention, unknown-`type` rejection, and empty-registry behavior in `sites/core/schemas/README.md`, linking §W3/§W6
 
 **Checkpoint**: `sections` items are a closed, discriminated, validatable union built from one registry.
 
@@ -93,8 +93,8 @@ description: "Task list for Central Website Schema (Phase 3)"
 
 ### Implementation for User Story 3
 
-- [ ] T010 [US3] Document in `sites/core/schemas/README.md` that onboarding **produces**, templates **consume/merge**, and the renderer **accepts only** `WebsiteConfig` — one import surface (`sites/core/schemas`), no per-layer site shape — linking §W1 and FR-017
-- [ ] T011 [US3] Guard: grep `sites/` for any competing whole-site type/shape (e.g. `interface .*Site`, `SiteConfig`, `PageConfig`) and confirm `WebsiteConfig` is the only one; record the check result
+- [X] T010 [US3] Document in `sites/core/schemas/README.md` that onboarding **produces**, templates **consume/merge**, and the renderer **accepts only** `WebsiteConfig` — one import surface (`sites/core/schemas`), no per-layer site shape — linking §W1 and FR-017
+- [X] T011 [US3] Guard: grep `sites/` for any competing whole-site type/shape (e.g. `interface .*Site`, `SiteConfig`, `PageConfig`) and confirm `WebsiteConfig` is the only one; record the check result
 
 **Checkpoint**: `WebsiteConfig` is the lingua franca; no alternative site representation exists.
 
@@ -108,9 +108,9 @@ description: "Task list for Central Website Schema (Phase 3)"
 
 ### Implementation for User Story 4
 
-- [ ] T012 [P] [US4] Create `sites/core/schemas/company.ts`: `companySchema = z.object({ name: z.string(), tagline: z.string().optional(), contact: z.object({ email, phone, address }).partial().optional(), social: z.record(z.string()).optional(), legal: z.object({ legalName, taxId }).partial().optional() })` and `export type CompanyConfig = z.infer<...>` (data-model "CompanyConfig"; partial/optional for graceful degradation, FR-013)
-- [ ] T013 [US4] Re-export `companySchema` and `CompanyConfig` from `sites/core/schemas/index.ts`
-- [ ] T014 [US4] Document `company` as the single site-level source of business identity (not duplicated per section) in `sites/core/schemas/README.md`, linking §W8 / FR-008
+- [X] T012 [P] [US4] Create `sites/core/schemas/company.ts`: `companySchema = z.object({ name: z.string(), tagline: z.string().optional(), contact: z.object({ email, phone, address }).partial().optional(), social: z.record(z.string()).optional(), legal: z.object({ legalName, taxId }).partial().optional() })` and `export type CompanyConfig = z.infer<...>` (data-model "CompanyConfig"; partial/optional for graceful degradation, FR-013)
+- [X] T013 [US4] Re-export `companySchema` and `CompanyConfig` from `sites/core/schemas/index.ts`
+- [X] T014 [US4] Document `company` as the single site-level source of business identity (not duplicated per section) in `sites/core/schemas/README.md`, linking §W8 / FR-008
 
 **Checkpoint**: Business identity is typed and single-sourced at the site level.
 
@@ -124,9 +124,9 @@ description: "Task list for Central Website Schema (Phase 3)"
 
 ### Implementation for User Story 5
 
-- [ ] T015 [P] [US5] Create `sites/core/schemas/theme.ts`: `themeSchema = z.object({ colors: z.object({ primary, secondary?, accent?, background?, foreground? }), typography: z.object({ headingFont?, bodyFont? }).optional(), mode: z.enum(['light','dark','system']).default('system'), radius?, spacing? })` with defaults throughout, and `export type ThemeConfig = z.infer<...>` (data-model "ThemeConfig"; all defaulted for FR-013)
-- [ ] T016 [US5] Re-export `themeSchema` and `ThemeConfig` from `sites/core/schemas/index.ts`
-- [ ] T017 [US5] Document `theme` as site-wide visual tokens changeable as configuration (no per-section source edit) in `sites/core/schemas/README.md`, linking §W8 / FR-009
+- [X] T015 [P] [US5] Create `sites/core/schemas/theme.ts`: `themeSchema = z.object({ colors: z.object({ primary, secondary?, accent?, background?, foreground? }), typography: z.object({ headingFont?, bodyFont? }).optional(), mode: z.enum(['light','dark','system']).default('system'), radius?, spacing? })` with defaults throughout, and `export type ThemeConfig = z.infer<...>` (data-model "ThemeConfig"; all defaulted for FR-013)
+- [X] T016 [US5] Re-export `themeSchema` and `ThemeConfig` from `sites/core/schemas/index.ts`
+- [X] T017 [US5] Document `theme` as site-wide visual tokens changeable as configuration (no per-section source edit) in `sites/core/schemas/README.md`, linking §W8 / FR-009
 
 **Checkpoint**: Visual identity is typed, defaulted, and applied site-wide via configuration.
 
@@ -142,9 +142,9 @@ description: "Task list for Central Website Schema (Phase 3)"
 
 ### Implementation for User Story 6
 
-- [ ] T018 [US6] Create `sites/core/schemas/validate-website.ts`: `validateWebsiteConfig(input)` that never throws — applies schema defaults to missing/partial `company`/`theme` (W4/FR-013), validates each `sections` item against its member schema, **rejects the whole config** if any item is invalid (W5/FR-012/FR-014), and returns a per-item report `{ index, type?, valid, issues? }` with valid siblings marked valid (FR-015/SC-006); preserve `sections` order (FR-006). Reuse `validateBlockConfig` from `validate.ts` where applicable
-- [ ] T019 [US6] Re-export `validateWebsiteConfig` (and its result type) from `sites/core/schemas/index.ts`
-- [ ] T020 [US6] Document the whole-site validation policy (defaults for partial company/theme vs. reject on invalid section item; per-item diagnostics) in `sites/core/schemas/README.md`, linking §W4/§W5
+- [X] T018 [US6] Create `sites/core/schemas/validate-website.ts`: `validateWebsiteConfig(input)` that never throws — applies schema defaults to missing/partial `company`/`theme` (W4/FR-013), validates each `sections` item against its member schema, **rejects the whole config** if any item is invalid (W5/FR-012/FR-014), and returns a per-item report `{ index, type?, valid, issues? }` with valid siblings marked valid (FR-015/SC-006); preserve `sections` order (FR-006). Reuse `validateBlockConfig` from `validate.ts` where applicable
+- [X] T019 [US6] Re-export `validateWebsiteConfig` (and its result type) from `sites/core/schemas/index.ts`
+- [X] T020 [US6] Document the whole-site validation policy (defaults for partial company/theme vs. reject on invalid section item; per-item diagnostics) in `sites/core/schemas/README.md`, linking §W4/§W5
 
 **Checkpoint**: A `WebsiteConfig` is validatable as one unit with a defined, non-crashing failure behavior.
 
@@ -160,8 +160,8 @@ description: "Task list for Central Website Schema (Phase 3)"
 
 ### Implementation for User Story 7
 
-- [ ] T021 [US7] Document the single-registry extension procedure (author block schema → one `registerSection(defineSection('type', schema))` call → `buildSectionSchema()` picks it up; field additions to `company`/`theme` must be optional/defaulted) in `sites/core/schemas/README.md`, linking §W7 / FR-018 / FR-019
-- [ ] T022 [US7] Backward-compat proof (scratch file, NOT committed): register a throwaway section type, confirm it validates as a `Section` member, and confirm a sample `WebsiteConfig` authored before the addition still passes `validateWebsiteConfig` unchanged
+- [X] T021 [US7] Document the single-registry extension procedure (author block schema → one `registerSection(defineSection('type', schema))` call → `buildSectionSchema()` picks it up; field additions to `company`/`theme` must be optional/defaulted) in `sites/core/schemas/README.md`, linking §W7 / FR-018 / FR-019
+- [X] T022 [US7] Backward-compat proof (scratch file, NOT committed): register a throwaway section type, confirm it validates as a `Section` member, and confirm a sample `WebsiteConfig` authored before the addition still passes `validateWebsiteConfig` unchanged
 
 **Checkpoint**: New section types are added in one place, backward-compatibly; existing sites stay valid.
 
@@ -171,10 +171,10 @@ description: "Task list for Central Website Schema (Phase 3)"
 
 **Purpose**: Prove the schema end-to-end with the quickstart and keep Phase 3 free of concrete sections.
 
-- [ ] T023 [P] Author the quickstart.md recipe in a throwaway scratch file (register a stub block schema as `hero`, author the sample `WebsiteConfig`, run `validateWebsiteConfig`): valid renders, order = list order, unknown `type` rejects whole config, empty `sections: []` valid, omitted `theme` defaults — confirm it type-checks and compiles (SC-001/004/008/009)
-- [ ] T024 Verify whole-site validation runs at **build/server time only** and adds **no client hydration JS for SSG pages** (Constitution IX) via `nuxt build` output inspection
-- [ ] T025 [P] Update `sites/core/README.md` (or root pointer) to reference `contracts/website-schema-contract.md` as the authoritative whole-site standard
-- [ ] T026 Delete the scratch files from T022/T023 (Phase 3 commits no concrete sections) and confirm `sites/core/components/sections/` remains section-free and the registry ships empty
+- [X] T023 [P] Author the quickstart.md recipe in a throwaway scratch file (register a stub block schema as `hero`, author the sample `WebsiteConfig`, run `validateWebsiteConfig`): valid renders, order = list order, unknown `type` rejects whole config, empty `sections: []` valid, omitted `theme` defaults — confirm it type-checks and compiles (SC-001/004/008/009)
+- [X] T024 Verify whole-site validation runs at **build/server time only** and adds **no client hydration JS for SSG pages** (Constitution IX) via `nuxt build` output inspection
+- [X] T025 [P] Update `sites/core/README.md` (or root pointer) to reference `contracts/website-schema-contract.md` as the authoritative whole-site standard
+- [X] T026 Delete the scratch files from T022/T023 (Phase 3 commits no concrete sections) and confirm `sites/core/components/sections/` remains section-free and the registry ships empty
 
 ---
 
