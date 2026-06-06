@@ -4,7 +4,7 @@
 
 **Created**: 2026-06-05
 
-**Status**: Draft
+**Status**: Completed
 
 **Input**: User description: "FASE 1 — Estrutura do Core. Primeiro organize o projeto. Estrutura recomendada: sites/ com core/ (components/{sections,ui,layout}, composables, theme, seo, forms, types, utils, schemas), templates/, clients/, onboarding/, assets/, scripts/"
 
