@@ -33,6 +33,23 @@ a client, validate structure, generate config." It depends only on reading templ
 types/schemas; nothing in lower layers depends on it. The command writes a new `clients/<name>/`
 directory and updates deploy wiring; it never edits template or core source.
 
+## Clarifications
+
+### Session 2026-06-06
+
+- Q: When multiple clients exist, how is the served client chosen? → A: One build per client — a static
+  site is generated for a single selected client (`nuxt generate`), and that static output is shipped to the
+  server. No runtime router, no multi-tenant build.
+- Q: How does the per-client build know which client to render and where its assets/domain come from? → A:
+  The target client is selected at build time via an env var / CLI flag; wiring resolves that client's config
+  and assets by convention from its own directory (auto-discovery). The scaffold writes only the new client
+  directory and edits no shared config.
+- Q: How does the operator supply name, template, and domain to `npm run new-client`? → A: Interactive
+  prompts for missing values, overridable by CLI flags/args (human-friendly and CI-scriptable).
+- Q: Beyond name + domain, what does the generated `config.json` contain? → A: All content seeded from the
+  chosen template's defaults, plus a display name derived from the directory name (e.g. `clinica-saude` →
+  "Clínica Saúde"); placeholder copy/images that render immediately and are refined later.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - One command scaffolds a complete client (Priority: P1)
@@ -87,25 +104,27 @@ the generated files — the config passes validation and a complete site for the
 
 ### User Story 3 - The new client is deploy-ready without breaking existing clients (Priority: P2)
 
-After scaffolding, the new client's assets resolve and its domain is recorded so the site can be built and
-served — and every previously scaffolded client continues to build and serve exactly as before.
+After scaffolding, the new client can be selected as the static build target — its assets resolve and its
+domain is recorded so a static site can be generated for it — and every previously scaffolded client
+continues to build exactly as before.
 
 **Why this priority**: "Prepare deploy" is the step most prone to manual error today, because it means
 touching shared wiring. Automating it is high value, but it depends on a valid client already existing
 (US1/US2), so it ranks just below them.
 
-**Independent Test**: Scaffold a second client alongside the existing one, then build/preview — both clients'
-images resolve from their own directories and both domains are recorded, with no manual edit to shared
-wiring.
+**Independent Test**: Scaffold a second client alongside the existing one, then generate the static site for
+each by selecting it as the build target — each build resolves that client's own images and domain, with no
+manual edit to shared wiring between runs.
 
 **Acceptance Scenarios**:
 
-1. **Given** a newly scaffolded client, **When** the site is built/served, **Then** that client's images
-   resolve from its own directory at its own asset path.
+1. **Given** a newly scaffolded client selected as the build target, **When** the static site is generated,
+   **Then** that client's images resolve from its own directory at its own asset path.
 2. **Given** at least one pre-existing client, **When** a new client is scaffolded, **Then** the existing
-   client still builds and serves unchanged.
-3. **Given** the new client, **When** its deploy registration is inspected, **Then** its domain and asset
-   location are recorded through the conventional mechanism, not by hand-editing unrelated config.
+   client can still be selected and generated unchanged.
+3. **Given** the new client, **When** its directory is inspected, **Then** its domain and asset location are
+   recorded by convention inside its own directory, with no hand-edit to shared/app config required to make
+   it selectable.
 
 ---
 
@@ -153,24 +172,27 @@ before they exist; they harden rather than enable it.
 - **FR-001**: The platform MUST expose a single command, runnable as `npm run new-client`, that scaffolds a
   new client end to end.
 - **FR-002**: The command MUST accept, for a run, the new client's name, a source template, and the client's
-  domain — collecting any missing value interactively or reporting it as required (no silent defaults for
-  these three).
+  domain — accepting them as CLI flags/args and interactively prompting for any value not supplied (no silent
+  defaults for these three). When all three are supplied as flags, the command MUST run non-interactively.
 - **FR-003**: The command MUST create a new client directory under the clients layer, named for the client,
   in the same conventional shape as existing clients: a configuration document, a domain file, an images
   location, a tests location, and a README.
-- **FR-004**: The command MUST seed the new client's configuration from the chosen template's defaults,
-  applying the new client's identity (at minimum its name and domain), so the result is a distinct client and
-  not a copy of another client's content.
+- **FR-004**: The command MUST seed the new client's configuration from the chosen template's defaults, and
+  MUST inject the new client's identity — a display name derived from the directory name (e.g. `clinica-saude`
+  → "Clínica Saúde") plus its domain — so the result is a distinct client with placeholder content that
+  renders immediately, not a copy of another client's content.
 - **FR-005**: The generated configuration MUST pass the platform's existing configuration validation with no
   manual edits.
-- **FR-006**: The generated client MUST produce a complete, rendering site using the chosen template when the
-  project is built or previewed, with no manual edits.
-- **FR-007**: The command MUST register the new client for deployment — at minimum making its images resolve
-  from its own directory and recording its domain — through the platform's conventional mechanism.
-- **FR-008**: Registering a new client for deployment MUST NOT alter the behavior of any existing client; all
-  previously scaffolded clients MUST continue to build and serve unchanged.
-- **FR-009**: The command MUST NOT modify template-layer or core-layer source; it may only create the new
-  client directory and update deploy wiring.
+- **FR-006**: The generated client MUST produce a complete, rendering site using the chosen template when it
+  is selected as the static build target and the site is generated/previewed, with no manual edits.
+- **FR-007**: The new client MUST be selectable as the static build target via an env var / CLI flag, such
+  that generating the static site for it resolves its config, images, and domain by convention from its own
+  directory — without the operator hand-editing shared or app-level config to make it selectable.
+- **FR-008**: Adding a new client MUST NOT alter the behavior of any existing client; every previously
+  scaffolded client MUST remain selectable and generate an unchanged static site.
+- **FR-009**: The command MUST write only the new client directory; it MUST NOT modify template-layer,
+  core-layer, or shared app/deploy source to register the client (selection and asset resolution work by
+  convention/auto-discovery, not per-client edits to shared files).
 - **FR-010**: The command MUST refuse to overwrite an existing client of the same name, reporting the
   collision and leaving the existing client untouched.
 - **FR-011**: The command MUST reject an unknown template (listing the available templates) and an invalid
@@ -178,7 +200,7 @@ before they exist; they harden rather than enable it.
 - **FR-012**: On any failure, the command MUST NOT leave a partially-created client or partially-applied
   deploy wiring behind.
 - **FR-013**: The command MUST report, on success, where the client was created and what to do next (e.g. how
-  to build/preview it).
+  to select it as the build target and generate its static site).
 - **FR-014**: The generated client directory MUST include a starter test that the project's existing test
   suite discovers and runs.
 
@@ -190,8 +212,9 @@ before they exist; they harden rather than enable it.
   defaults seed the new client's configuration. Read-only input to the command.
 - **Client scaffold**: The output directory for the new client — its configuration, domain file, images
   location, tests, and README — in the conventional client shape.
-- **Deploy registration**: The conventional wiring that makes a client buildable and servable — its asset
-  resolution and recorded domain — additive per client and isolated from other clients.
+- **Build-target selection**: The convention by which a single client is chosen at static-generate time (env
+  var / CLI flag) and its config, assets, and domain are resolved from its own directory — additive per
+  client and isolated, requiring no shared-file edit per client.
 
 ## Success Criteria *(mandatory)*
 
@@ -202,8 +225,8 @@ before they exist; they harden rather than enable it.
 - **SC-002**: A scaffolded client requires zero manual file creation and zero manual edits before it
   validates, builds, and renders.
 - **SC-003**: 100% of scaffolded clients pass the platform's configuration validation on first run.
-- **SC-004**: After scaffolding a new client, 100% of previously existing clients still build and serve
-  unchanged.
+- **SC-004**: After scaffolding a new client, 100% of previously existing clients still generate an unchanged
+  static site, and scaffolding edits zero shared/app/template/core files.
 - **SC-005**: For every guarded error case (name collision, unknown template, invalid name), the command
   creates nothing and reports an actionable reason.
 - **SC-006**: An operator unfamiliar with the internal client layout can create a working client using only
@@ -214,17 +237,21 @@ before they exist; they harden rather than enable it.
 - **Reuses Phase-7 conventions**: The scaffold targets the established client shape proven in Phase 7
   (`config.json`, `domain.txt`, `images/`, `__tests__/`, `README.md`) and the existing template and
   validation layers; it does not redesign them.
-- **Per-client deploy model**: "Prepare deploy" means making each client independently buildable/servable —
-  recording its domain and resolving its own assets — consistent with the existing one-directory-per-client,
-  one-domain-per-client model. A multi-tenant runtime router is out of scope for this phase.
-- **Input model**: The three identifying values (name, template, domain) are provided as command
-  input/prompts; richer content (full copy, real images, branding) is refined afterward by editing the
-  generated client, exactly as a hand-built client would be.
+- **Per-client static deploy model**: "Prepare deploy" means making each client independently selectable as a
+  static-generate target — its domain recorded and its own assets resolved from its directory — consistent
+  with the one-directory-per-client, one-domain-per-client model. The operator generates a static site for
+  one selected client and ships that output to their server. A multi-tenant runtime router is out of scope.
+- **One-time dynamic wiring**: Making clients selectable by env/flag with auto-discovered assets may require a
+  one-time change to the shared build wiring (today it hardcodes a single client). That infrastructure change
+  is part of this phase's plan, but the per-client scaffold command itself never edits shared files (FR-009).
+- **Input model**: The three identifying values (name, template, domain) are accepted as CLI flags and
+  prompted for when missing; richer content (full copy, real images, branding) is refined afterward by
+  editing the generated client, exactly as a hand-built client would be.
 - **Templates already exist**: The available niche templates (clinic, lawyer, restaurant, school,
   local-business) are the selectable sources; the command does not create new templates.
 - **Placeholder assets**: The scaffold provides a placeholder images location/asset; supplying real images is
   a later data change against the client's own directory.
 - **Single client per run**: One invocation scaffolds exactly one client.
 - **Local developer tooling**: The command runs in the project's development environment (alongside existing
-  scripts); it does not itself perform a remote deploy — it makes the client deploy-ready for the existing
-  build/preview pipeline.
+  scripts); it does not itself perform a remote deploy — it makes the client ready to be selected and
+  statically generated, after which the operator ships the static output to their server.

@@ -34,5 +34,5 @@
 - Items marked incomplete require spec updates before `/speckit-clarify` or `/speckit-plan`
 - `npm run new-client` is retained as the literal command name from the user request (an interface
   identifier, not an implementation detail) per FR-001.
-- One scope assumption worth confirming in `/speckit-clarify`: "prepare deploy" is interpreted as the
-  per-client, one-domain-per-client model (Assumptions), not a multi-tenant runtime router.
+- Resolved in `/speckit-clarify` (Session 2026-06-06): per-client static-generate deploy model, build-target
+  selection by env/flag with auto-discovery, prompts+flags input, template-defaults+derived-name config seed.
