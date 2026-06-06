@@ -4,7 +4,7 @@
 
 **Created**: 2026-06-06
 
-**Status**: Draft
+**Status**: Completed
 
 **Input**: User description: "FASE 6 — Criar 1 template forte. Escolha UM nicho: clínica (alta demanda, estrutura previsível, visual simples, ticket melhor). Estrutura: templates/clinic/ com page.ts, defaults.json, theme.ts. O template apenas organiza seções, define ordem e define defaults. Nada mais."
 
